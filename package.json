@@ -1,0 +1,47 @@
+{
+  "name": "@jvstack/helpers",
+  "description": "Collection of helpers i use in all my projects",
+  "author": "João Vitor Ceolin Prudente",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joao-vitor-prudente/jvstack_helpers"
+  },
+  "homepage": "https://github.com/joao-vitor-prudente/jvstack_helpers",
+  "bugs": {
+    "url": "https://github.com/joao-vitor-prudente/jvstack_helpers/issues"
+  },
+  "keywords": [
+    "helpers",
+    "utils",
+    "jvstack"
+  ],
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.3",
+    "eslint": "^10.4.0",
+    "eslint-plugin-prettier": "^5.5.5",
+    "typescript-eslint": "^8.59.2"
+  },
+  "peerDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
