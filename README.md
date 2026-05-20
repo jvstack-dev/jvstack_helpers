@@ -15,10 +15,7 @@ npm install @jvstack/helpers
 | `ObjectExtensions` | Typed wrapper for object entries, keys, values, and omit |
 | `Matcher` | Type-safe matcher for discriminated unions |
 | `Policy` | Composable allow/deny rules |
-| `PolicyResult` | Result of evaluating a policy |
-| `PolicyResultType` | Enum with `allowed` and `denied` |
 | `IndexedCollection` | Key-indexed collection of items |
-| `IndexedSet` | Set operations over indexed collections |
 | `Counter` | Mutable counts keyed by property keys |
 
 ## ObjectExtensions
