@@ -1,12 +1,5 @@
 {
   "compilerOptions": {
-    "target": "ES2025",
-    "lib": ["ES2025"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "moduleDetection": "force",
-    "types": ["node"],
-
     "strict": true,
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
@@ -16,7 +9,5 @@
     "noUnusedParameters": true,
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedSideEffectImports": true
-  },
-  "include": ["lib", "tests/object.test.ts", "tests/matcher.test.ts", "tests/policy.test.ts"],
-  "exclude": ["node_modules", "dist", "lib/**/*.test.ts"]
+  }
 }

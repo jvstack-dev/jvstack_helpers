@@ -6,7 +6,7 @@ import tseslint from "typescript-eslint";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
 
 export default defineConfig([
-  globalIgnores(["dist", "node_modules", ".turbo"]),
+  globalIgnores(["dist", "node_modules"]),
   eslintPluginPrettierRecommended,
   js.configs.recommended,
   tseslint.configs.strict,
