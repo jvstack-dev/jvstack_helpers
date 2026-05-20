@@ -1,12 +1,7 @@
 {
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2025",
-    "lib": ["ES2025"],
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "moduleDetection": "force",
-    "types": ["node"],
+    "noEmit": true
   },
   "include": ["../tsdown.config.ts", "../vitest.config.ts"],
   "exclude": ["../node_modules", "../dist", "../lib", "../tests"]
