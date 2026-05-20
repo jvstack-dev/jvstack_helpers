@@ -17,6 +17,6 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["lib"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["lib", "tests/object.test.ts", "tests/matcher.test.ts", "tests/policy.test.ts"],
+  "exclude": ["node_modules", "dist", "lib/**/*.test.ts"]
 }

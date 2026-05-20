@@ -19,12 +19,10 @@ export class ObjectExtensions<T extends Record<PropertyKey, unknown>> {
     return Object.values(this.obj) as T[keyof T][];
   }
 
-  public omit<T extends Record<PropertyKey, unknown>, TKey extends keyof T>(
-    ...ks: TKey[]
-  ): ObjectExtensions<Omit<T, TKey>> {
-    const omitted: (keyof T)[] = ks;
-    const result = ObjectExtensions.fromEntries(this.entries().filter(([key]) => !omitted.includes(key)));
-    return new ObjectExtensions(result as unknown as Omit<T, TKey>);
+  public omit<TKey extends keyof T>(...ks: TKey[]): ObjectExtensions<Omit<T, TKey>> {
+    const omitted = new Set<PropertyKey>(ks);
+    const entries = this.entries().filter(([key]) => !omitted.has(key));
+    return new ObjectExtensions(Object.fromEntries(entries) as Omit<T, TKey>);
   }
 
   public unwrap(): T {

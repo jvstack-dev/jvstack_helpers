@@ -12,10 +12,10 @@ class PolicyFailureError<TFailure> extends Error {
 export abstract class PolicyResult<TFailure = never> {
   public abstract type: PolicyResultType;
   public abstract readonly failures: TFailure[];
-  public static allowed<TResult>(): PolicyResult<TResult> {
+  public static allowed(): AllowedPolicyResult {
     return new AllowedPolicyResult();
   }
-  public static denied<TFailure>(failures: TFailure[]): PolicyResult<TFailure> {
+  public static denied<TFailure>(failures: TFailure[]): DeniedPolicyResult<TFailure> {
     return new DeniedPolicyResult(failures);
   }
 }

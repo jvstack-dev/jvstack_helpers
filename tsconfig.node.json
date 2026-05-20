@@ -17,6 +17,6 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["tsdown.config.ts"],
+  "include": ["tsdown.config.ts", "vitest.config.ts"],
   "exclude": ["node_modules", "dist"]
 }
