@@ -17,6 +17,9 @@ npm install @jvstack/helpers
 | `Policy` | Composable allow/deny rules |
 | `PolicyResult` | Result of evaluating a policy |
 | `PolicyResultType` | Enum with `allowed` and `denied` |
+| `IndexedCollection` | Key-indexed collection of items |
+| `IndexedSet` | Set operations over indexed collections |
+| `Counter` | Mutable counts keyed by property keys |
 
 ## ObjectExtensions
 
@@ -121,6 +124,55 @@ Behavior:
 - `or` — any policy may allow; collects failures when all deny
 - `not` — inverts a single policy
 - `noop` — always allows
+
+## IndexedCollection
+
+Stores items in a collection keyed by a function. Duplicate keys overwrite earlier items.
+
+```ts
+import { IndexedCollection } from "@jvstack/helpers";
+
+type User = { id: number; name: string };
+
+const users = new IndexedCollection(
+  [
+    { id: 1, name: "Alice" },
+    { id: 2, name: "Bob" },
+  ],
+  (user) => user.id,
+);
+
+users.get(1); // { id: 1, name: "Alice" }
+users.add({ id: 3, name: "Carol" });
+[...users]; // all items
+
+const admins = users.set.leftDifference(otherUsers);
+const shared = users.set.intersection(otherUsers);
+const everyone = users.set.union(otherUsers);
+```
+
+Use `.set` to get an `IndexedSet` with `leftDifference`, `rightDifference`, `symmetricDifferenec`, `intersection`, and `union`. Operations compare items by key, not reference.
+
+## Counter
+
+Tracks numeric counts for arbitrary keys. Missing keys read as `0`.
+
+```ts
+import { Counter } from "@jvstack/helpers";
+
+const counter = new Counter<string>();
+
+counter.add("click");
+counter.add("click");
+counter.add("view");
+
+counter.get("click"); // 2
+counter.get("view"); // 1
+counter.get("missing"); // 0
+
+counter.decrement("click");
+counter.get("click"); // 1
+```
 
 ## License
 
