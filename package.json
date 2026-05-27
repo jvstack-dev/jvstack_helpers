@@ -5,11 +5,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joao-vitor-prudente/jvstack_helpers.git"
+    "url": "git+https://github.com/jvstack-dev/jvstack_helpers.git"
   },
-  "homepage": "https://github.com/joao-vitor-prudente/jvstack_helpers",
+  "homepage": "https://github.com/jvstack-dev/jvstack_helpers",
   "bugs": {
-    "url": "https://github.com/joao-vitor-prudente/jvstack_helpers/issues"
+    "url": "https://github.com/jvstack-dev/jvstack_helpers/issues"
   },
   "keywords": [
     "helpers",
