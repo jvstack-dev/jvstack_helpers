@@ -178,6 +178,7 @@ export class IterableExtensions<T> implements Iterable<T> {
     }
     return ObjectExtensions.fromEntries(
       new ObjectExtensions(result).entries().map(([key, value]) => {
+        /* v8 ignore next -- unreachable */
         if (!value) throw new Error("unreachable");
         return [key, new IterableExtensions(value)];
       }),
