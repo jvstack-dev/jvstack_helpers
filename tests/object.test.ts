@@ -50,4 +50,40 @@ describe("ObjectExtensions", () => {
       expect(original).toEqual({ a: 1, b: 2, c: 3 });
     });
   });
+
+  describe("pick", () => {
+    it("keeps the given keys", () => {
+      const result = subject.pick("a", "c").unwrap();
+
+      expect(result).toEqual({ a: 1, c: 3 });
+    });
+
+    it("returns a new wrapper without mutating the original object", () => {
+      const original = subject.unwrap();
+      subject.pick("a");
+
+      expect(original).toEqual({ a: 1, b: 2, c: 3 });
+    });
+  });
+
+  describe("extend", () => {
+    it("merges the given object into a new wrapper", () => {
+      const result = subject.extend({ d: 4 }).unwrap();
+
+      expect(result).toEqual({ a: 1, b: 2, c: 3, d: 4 });
+    });
+
+    it("overwrites existing keys with values from the other object", () => {
+      const result = subject.extend({ b: 20 }).unwrap();
+
+      expect(result).toEqual({ a: 1, b: 20, c: 3 });
+    });
+
+    it("returns a new wrapper without mutating the original object", () => {
+      const original = subject.unwrap();
+      subject.extend({ d: 4 });
+
+      expect(original).toEqual({ a: 1, b: 2, c: 3 });
+    });
+  });
 });

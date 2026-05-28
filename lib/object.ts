@@ -53,6 +53,26 @@ export class ObjectExtensions<T extends Record<PropertyKey, unknown>> {
   }
 
   /**
+   * Returns a new wrapper with the given keys picked.
+   *
+   * @param ks - The keys to pick from the object.
+   */
+  public pick<TKey extends keyof T>(...ks: TKey[]): ObjectExtensions<Pick<T, TKey>> {
+    const picked = new Set<PropertyKey>(ks);
+    const entries = this.entries().filter(([key]) => picked.has(key));
+    return new ObjectExtensions(Object.fromEntries(entries) as Pick<T, TKey>);
+  }
+
+  /**
+   * Returns a new wrapper with the original object extended with the given object.
+   *
+   * @param obj - The object to extend the original object with.
+   */
+  public extend<TOther extends Record<PropertyKey, unknown>>(obj: TOther): ObjectExtensions<T & TOther> {
+    return new ObjectExtensions({ ...this.obj, ...obj });
+  }
+
+  /**
    * Returns the underlying object.
    */
   public unwrap(): T {

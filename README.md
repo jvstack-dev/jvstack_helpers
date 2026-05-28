@@ -12,7 +12,8 @@ npm install @jvstack/helpers
 
 | Export | Description |
 | --- | --- |
-| `ObjectExtensions` | Typed wrapper for object entries, keys, values, and omit |
+| `ObjectExtensions` | Typed wrapper for object entries, keys, values, omit, pick, and extend |
+| `functionUtils` | Small function helpers such as `identity`, `noop`, and `throwError` |
 | `Matcher` | Type-safe matcher for discriminated unions |
 | `Policy` | Composable allow/deny rules |
 | `IndexedCollection` | Key-indexed collection of items |
@@ -32,11 +33,30 @@ obj.keys(); // ["a", "b", "c"]
 obj.values(); // [1, 2, 3]
 
 obj.omit("b").unwrap(); // { a: 1, c: 3 }
+obj.pick("a", "c").unwrap(); // { a: 1, c: 3 }
+obj.extend({ d: 4 }).unwrap(); // { a: 1, b: 2, c: 3, d: 4 }
 
 ObjectExtensions.fromEntries([
   ["a", 1],
   ["b", true],
 ] as const).unwrap(); // { a: 1, b: true }
+```
+
+## functionUtils
+
+Common function helpers for defaults, placeholders, and typed passthrough.
+
+```ts
+import { functionUtils } from "@jvstack/helpers";
+
+functionUtils.identity(42); // 42
+
+const items = [1, 2, 3].map(functionUtils.identity);
+
+functionUtils.noop();
+await functionUtils.asyncNoop();
+
+functionUtils.throwError(new Error("failed")); // never returns
 ```
 
 ## Matcher
