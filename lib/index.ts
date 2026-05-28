@@ -4,3 +4,4 @@ export { Policy, PolicyResult, PolicyResultType } from "./policy";
 export { IndexedCollection } from "./indexed-collection";
 export { Counter } from "./counter";
 export { functionUtils } from "./function";
+export { IterableExtensions } from "./iterable";
