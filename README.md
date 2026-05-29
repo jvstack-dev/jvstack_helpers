@@ -10,15 +10,15 @@ npm install @jvstack/helpers
 
 ## Exports
 
-| Export               | Description                                                            |
-| -------------------- | ---------------------------------------------------------------------- |
-| `ObjectExtensions`   | Typed wrapper for object entries, keys, values, omit, pick, and extend |
-| `IterableExtensions` | Typed wrapper for zipping, grouping, and comparing iterables           |
-| `functionUtils`      | Small function helpers such as `identity`, `noop`, and `throwError`    |
-| `Matcher`            | Type-safe matcher for discriminated unions                             |
-| `Policy`             | Composable allow/deny rules                                            |
-| `IndexedCollection`  | Key-indexed collection of items                                        |
-| `Counter`            | Mutable counts keyed by property keys                                  |
+| Export              | Description                                                              |
+| ------------------- | ------------------------------------------------------------------------ |
+| `ObjectExtensions`  | Typed wrapper for object entries, keys, values, omit, pick, and extend   |
+| `ArrayExtensions`   | Array subclass for zipping, grouping, deduplication, and set-like checks |
+| `functionUtils`     | Small function helpers such as `identity`, `noop`, and `throwError`      |
+| `Matcher`           | Type-safe matcher for discriminated unions                               |
+| `Policy`            | Composable allow/deny rules                                              |
+| `IndexedCollection` | Key-indexed collection of items                                          |
+| `Counter`           | Mutable counts keyed by property keys                                    |
 
 ## ObjectExtensions
 
@@ -43,25 +43,22 @@ ObjectExtensions.fromEntries([
 ] as const).unwrap(); // { a: 1, b: true }
 ```
 
-## IterableExtensions
+## ArrayExtensions
 
-Wraps any iterable with helpers for zipping, grouping, deduplication, chunking, and set-like checks. Methods that return iterables return new `IterableExtensions` instances so they can be chained. Use `zipStrict` and `zipByStrict` when every pair must exist; they throw instead of returning `undefined`.
+Array subclass with helpers for zipping, grouping, deduplication, chunking, and set-like checks. Methods that return arrays return new `ArrayExtensions` instances so they can be chained. Use `zipStrict` and `zipByStrict` when every pair must exist; they throw instead of returning `undefined`.
 
 ```ts
-import { IterableExtensions } from "@jvstack/helpers";
+import { ArrayExtensions } from "@jvstack/helpers";
 
-const items = new IterableExtensions([1, 2, 3, 2]);
+const items = new ArrayExtensions(1, 2, 3, 2);
 
-[...items]; // [1, 2, 3, 2]
-
-const iterable = [1, 2, 3].values();
-new IterableExtensions(iterable).unwrap(); // returns the original iterable
+items; // [1, 2, 3, 2]
 
 items.hasSome([3, 4]); // true
 items.hasEvery([2, 3]); // true
 
-[...items.zipStrict(["a", "b", "c", "d"])]; // [[1, "a"], [2, "b"], [3, "c"], [2, "d"]]
-[...items.zip(["a", "b"])]; // [[1, "a"], [2, "b"], [3, "c"], [2, undefined]]
+items.zipStrict(["a", "b", "c", "d"]); // [[1, "a"], [2, "b"], [3, "c"], [2, "d"]]
+items.zip(["a", "b"]); // [[1, "a"], [2, "b"], [3, "c"], [2, undefined]]
 
 const left = [{ id: 1 }, { id: 2 }];
 const right = [
@@ -69,15 +66,10 @@ const right = [
   { id: 1, name: "a" },
 ];
 
-[...new IterableExtensions(left).zipByStrict(right, (a, b) => a.id === b.id)];
+new ArrayExtensions(...left).zipByStrict(right, (a, b) => a.id === b.id);
 // [[{ id: 1 }, { id: 1, name: "a" }], [{ id: 2 }, { id: 2, name: "b" }]]
 
-[
-  ...new IterableExtensions([{ id: 1 }]).zipBy(
-    [{ id: 2 }],
-    (a, b) => a.id === b.id,
-  ),
-];
+new ArrayExtensions(...[{ id: 1 }]).zipBy([{ id: 2 }], (a, b) => a.id === b.id);
 // [[{ id: 1 }, undefined]]
 
 const users = [
@@ -86,21 +78,22 @@ const users = [
   { id: "3", role: "admin", name: "Carol" },
 ];
 
-new IterableExtensions(users).indexBy((user) => user.id);
+new ArrayExtensions(...users).indexBy((user) => user.id);
 // { "1": ..., "2": ..., "3": ... }
 
-[...items.enumerate()]; // [[0, 1], [1, 2], [2, 3], [3, 2]]
-[...items.unique()]; // [1, 2, 3]
-[...new IterableExtensions(users).uniqueBy((user) => user.id)]; // first item per id
+items.enumerate(); // [[0, 1], [1, 2], [2, 3], [3, 2]]
+items.unique(); // [1, 2, 3]
+new ArrayExtensions(...users).uniqueBy((user) => user.id); // first item per id
 
-const groups = new IterableExtensions(users).groupBy((user) => user.role);
-[...groups.admin]; // both admin users
-[...groups.user]; // the user
+const groups = new ArrayExtensions(...users).groupBy((user) => user.role);
+groups.admin; // both admin users
+groups.user; // the user
 
-[...new IterableExtensions([1, 2, 3, 4, 5]).windows(2)].map((window) => [
-  ...window,
-]);
+new ArrayExtensions(1, 2, 3, 4, 5).windows(2);
 // [[1, 2], [3, 4], [5]]
+
+ArrayExtensions.range(1, 5, { step: 2, inclusive: true });
+// [1,3,5]
 ```
 
 ## functionUtils
