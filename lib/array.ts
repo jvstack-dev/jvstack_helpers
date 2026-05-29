@@ -190,31 +190,49 @@ export class ArrayExtensions<T> extends Array<T> {
   }
 
   /**
-   * Returns an array of numbers from start to end with the given step.
+   * Returns an array of numbers from `start` through `end`, inclusive, with the given step.
    *
    * @param start - The starting number.
-   * @param end - The ending number.
-   * @param config - The configuration for the range. Optional.
-   * @param config.step - The step between numbers. Defaults to 1.
-   * @param config.inclusive - Whether to include the end number in the range. Defaults to false.
+   * @param end - The ending number, included in the result.
+   * @param step - The step between numbers. Defaults to 1.
    *
    * @example
    * ```ts
-   * ArrayExtensions.range(1, 5, { step: 2, inclusive: true });
+   * ArrayExtensions.rangeInclusive(1, 5, 2);
    * // [1, 3, 5]
    * ```
    */
-  public static range(
-    start: number,
-    end: number,
-    config?: { step?: number; inclusive?: boolean },
-  ): ArrayExtensions<number> {
-    const inclusive = config?.inclusive ?? false;
-    const step = config?.step ?? 1;
+  public static rangeInclusive(start: number, end: number, step = 1): ArrayExtensions<number> {
     const result = new ArrayExtensions<number>();
-    for (let i = start; inclusive ? i <= end : i < end; i += step) {
+    for (let i = start; i <= end; i += step) {
       result.push(i);
     }
     return result;
+  }
+
+  /**
+   * Returns an array of numbers from `start` up to but not including `end`, with the given step.
+   *
+   * @param start - The starting number.
+   * @param end - The ending number, excluded from the result.
+   * @param step - The step between numbers. Defaults to 1.
+   *
+   * @example
+   * ```ts
+   * ArrayExtensions.rangeExclusive(1, 5);
+   * // [1, 2, 3, 4]
+   * ```
+   */
+  public static rangeExclusive(start: number, end: number, step = 1): ArrayExtensions<number> {
+    const result = new ArrayExtensions<number>();
+    for (let i = start; i < end; i += step) {
+      result.push(i);
+    }
+    return result;
+  }
+
+  /** Returns the zero-based index of the last item in the array. */
+  public get lastIndex(): number {
+    return this.length - 1;
   }
 }

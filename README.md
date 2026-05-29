@@ -92,8 +92,14 @@ groups.user; // the user
 new ArrayExtensions(1, 2, 3, 4, 5).windows(2);
 // [[1, 2], [3, 4], [5]]
 
-ArrayExtensions.range(1, 5, { step: 2, inclusive: true });
-// [1,3,5]
+ArrayExtensions.rangeInclusive(1, 5, 2);
+// [1, 3, 5]
+
+ArrayExtensions.rangeExclusive(1, 5);
+// [1, 2, 3, 4]
+
+new ArrayExtensions(1, 2, 3, 4, 5).lastIndex;
+// 4
 ```
 
 ## functionUtils

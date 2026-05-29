@@ -210,12 +210,29 @@ describe("ArrayExtensions", () => {
     });
   });
 
-  describe("range", () => {
-    it("returns an array for the inclusive range from 1 to 5 with step 2", () => {
-      expect(ArrayExtensions.range(1, 5, { step: 2, inclusive: true })).toEqual([1, 3, 5]);
+  describe("rangeInclusive", () => {
+    it("returns numbers from start through end with the given step", () => {
+      expect(ArrayExtensions.rangeInclusive(1, 5, 2)).toEqual([1, 3, 5]);
     });
-    it("returns an array for the exclusive range from 1 to 5", () => {
-      expect(ArrayExtensions.range(1, 5)).toEqual([1, 2, 3, 4]);
+
+    it("includes end when step is 1", () => {
+      expect(ArrayExtensions.rangeInclusive(1, 5)).toEqual([1, 2, 3, 4, 5]);
+    });
+  });
+
+  describe("rangeExclusive", () => {
+    it("returns numbers from start up to but not including end", () => {
+      expect(ArrayExtensions.rangeExclusive(1, 5)).toEqual([1, 2, 3, 4]);
+    });
+
+    it("uses the given step", () => {
+      expect(ArrayExtensions.rangeExclusive(1, 6, 2)).toEqual([1, 3, 5]);
+    });
+  });
+
+  describe("lastIndex", () => {
+    it("returns the zero-based index of the last item in the array", () => {
+      expect(new ArrayExtensions(1, 2, 3).lastIndex).toBe(2);
     });
   });
 });
